@@ -164,8 +164,8 @@ class TextEditorMainWindow(QtGui.QMainWindow):
 
         self.saveAsAction = QtGui.QAction("Guardar Como...", self)
         self.saveAsAction.setShortcut('Ctrl+Shift+S')
-        self.saveAsAction.setStatusTip("Guardar cambios del fichero abierto en un"
-                                       " nuevo fichero")
+        self.saveAsAction.setStatusTip(
+            "Guardar cambios del fichero abierto en un nuevo fichero")
 
         ##### Barra de menús #####
         menuBar = self.menuBar()

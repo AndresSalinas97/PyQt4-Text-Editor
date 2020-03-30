@@ -49,8 +49,8 @@ class TextEditorModel():
             else:
                 self.openedFolderPath = folderPath
         except:
-            TextEditorDialogs.showErrorMessage("No se pudo abrir la carpeta \"" +
-                                               folderPath + "\"")
+            TextEditorDialogs.showErrorMessage(
+                "No se pudo abrir la carpeta \"" + folderPath + "\"")
 
     def openFile(self, filePath):
         """
@@ -63,8 +63,8 @@ class TextEditorModel():
 
                 file.close()
         except:
-            TextEditorDialogs.showErrorMessage("No se pudo abrir el fichero \"" +
-                                               filePath + "\"")
+            TextEditorDialogs.showErrorMessage(
+                "No se pudo abrir el fichero \"" + filePath + "\"")
 
     def saveFile(self, filePath):
         """
@@ -84,8 +84,8 @@ class TextEditorModel():
 
             TextEditorDialogs.showInfoMessage("Fichero guardado con exito!")
         except:
-            TextEditorDialogs.showErrorMessage("No se pudo guardar en el fichero \"" +
-                                               filePath + "\"")
+            TextEditorDialogs.showErrorMessage(
+                "No se pudo guardar en el fichero \"" + filePath + "\"")
 
     def reloadFolder(self):
         """
