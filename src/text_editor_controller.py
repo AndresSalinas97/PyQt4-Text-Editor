@@ -123,6 +123,7 @@ class TextEditorController():
         if (not selectedFiles):
             TextEditorDialogs.showErrorMessage(
                 "Primero debe seleccionar un fichero en el panel de la izquierda!")
+            return
 
         filePath = self.model.openedFolderPath + selectedFiles[0].text()
 
