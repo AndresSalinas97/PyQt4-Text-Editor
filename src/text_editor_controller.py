@@ -57,6 +57,8 @@ class TextEditorController():
         self.view.widget.arrowButton.clicked.connect(self._openSelectedFile)
         self.view.widget.refreshButton.clicked.connect(self.reloadFolder)
 
+        self.view.widget.fileList.itemClicked.connect(self._openSelectedFile)
+
         self.view.mainWindow.exitAction.triggered.connect(
             QtGui.qApp.closeAllWindows)
         self.view.mainWindow.openFileAction.triggered.connect(
