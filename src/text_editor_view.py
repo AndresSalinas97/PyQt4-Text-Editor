@@ -56,12 +56,12 @@ class TextEditorWidget(QtGui.QWidget):
         # Altura mínima de la segunda fila (lista de ficheros y editor de texto).
         self._ROW_2_MIN_HEIGHT = 300
 
-        self.initUI()
+        self._initUI()
 
         # El editor se abrirá con el directorio actual (.) cargado.
         # self._openThisFolder(".")  # TODO: Mover al controlador.
 
-    def initUI(self):
+    def _initUI(self):
         """
         Inicialización de la interfaz.
         """
@@ -142,9 +142,9 @@ class TextEditorMainWindow(QtGui.QMainWindow):
 
         self.textEditorWidget = textEditorWidget
 
-        self.initUI()
+        self._initUI()
 
-    def initUI(self):
+    def _initUI(self):
         """
         Inicialización de la interfaz.
         """
