@@ -58,9 +58,6 @@ class TextEditorWidget(QtGui.QWidget):
 
         self._initUI()
 
-        # El editor se abrirá con el directorio actual (.) cargado.
-        # self._openThisFolder(".")  # TODO: Mover al controlador.
-
     def _initUI(self):
         """
         Inicialización de la interfaz.
@@ -101,7 +98,6 @@ class TextEditorWidget(QtGui.QWidget):
 
         ##### Botón #####
         self.arrowButton = QtGui.QPushButton(">>>", self)
-        # self.arrowButton.clicked.connect(self.openSelectedFile)  # TODO: Mover al controlador.
         self.arrowButton.setStatusTip("Abrir el fichero seleccionado")
 
         ##### Configuración grid layout #####
@@ -153,28 +149,23 @@ class TextEditorMainWindow(QtGui.QMainWindow):
         self.exitAction = QtGui.QAction("Salir", self)
         self.exitAction.setShortcut('Ctrl+Q')
         self.exitAction.setStatusTip("Salir del programa")
-        # self.exitAction.triggered.connect(QtGui.qApp.closeAllWindows)  # TODO: Mover al controlador.
 
         self.openFileAction = QtGui.QAction("Abrir Fichero", self)
         self.openFileAction.setShortcut('Ctrl+O')
         self.openFileAction.setStatusTip("Abrir fichero")
-        # self.openFileAction.triggered.connect(self.textEditorWidget.openFileDialog)  # TODO: Mover al controlador.
 
         self.openFolderAction = QtGui.QAction("Abrir Carpeta", self)
         self.openFolderAction.setShortcut('Ctrl+Shift+O')
         self.openFolderAction.setStatusTip("Abrir carpeta")
-        # self.openFolderAction.triggered.connect(self.textEditorWidget.openFolderDialog)  # TODO: Mover al controlador
 
         self.saveFileAction = QtGui.QAction("Guardar", self)
         self.saveFileAction.setShortcut('Ctrl+S')
         self.saveFileAction.setStatusTip("Guardar cambios del fichero abierto")
-        # self.saveFileAction.triggered.connect(self.textEditorWidget.saveOpenedFile)  # TODO: Mover al controlador.
 
         self.saveAsAction = QtGui.QAction("Guardar Como...", self)
         self.saveAsAction.setShortcut('Ctrl+Shift+S')
         self.saveAsAction.setStatusTip("Guardar cambios del fichero abierto en un"
                                        " nuevo fichero")
-        # self.saveAsAction.triggered.connect(self.textEditorWidget.saveAsDialog)  # TODO: Mover al controlador.
 
         ##### Barra de menús #####
         menuBar = self.menuBar()
@@ -204,6 +195,78 @@ class TextEditorMainWindow(QtGui.QMainWindow):
 
         ##### Propiedades ventana #####
         self.setWindowTitle("Editor de Texto")
+
+
+class TextEditorDialogs():
+    """
+    Clase TextEditorDialogs: Contiene métodos para mostrar mensajes emergentes y
+    ventanas de diálogo para abrir/guardar ficheros/directorios.
+    """
+
+    @staticmethod
+    def showErrorMessage(errorText):
+        """
+        Muestra una ventana emergente de error con el mensaje indicado en
+        el argumento errorText.
+        """
+        msg = QtGui.QMessageBox()
+        msg.setWindowTitle("Error")
+        msg.setIcon(QtGui.QMessageBox.Critical)
+        msg.setText(errorText)
+        msg.exec_()
+
+    @staticmethod
+    def showInfoMessage(infoText):
+        """
+        Muestra una ventana emergente de información con el mensaje indicado en
+        el argumento infoText.
+        """
+        msg = QtGui.QMessageBox()
+        msg.setWindowTitle("Informacion")
+        msg.setIcon(QtGui.QMessageBox.Information)
+        msg.setText(infoText)
+        msg.exec_()
+
+    @staticmethod
+    def openFileDialog(parent):
+        """
+        Muestra una ventana de diálogo para seleccionar el fichero a abrir.
+
+        Argumentos:
+            parent: QWidget padre.
+
+        Devuelve:
+            String con la ruta del fichero seleccionado.
+        """
+        return QtGui.QFileDialog.getOpenFileName(parent, "Abrir fichero")
+
+    @staticmethod
+    def openFolderDialog(parent):
+        """
+        Muestra una ventana de diálogo para seleccionar la carpeta a abrir.
+
+        Argumentos:
+            parent: QWidget padre.
+
+        Devuelve:
+            String con la ruta de la carpeta seleccionada.
+        """
+        return QtGui.QFileDialog.getExistingDirectory(
+            parent, "Seleccionar carpeta")
+
+    @staticmethod
+    def saveFileDialog(parent):
+        """
+        Muestra una ventana de diálogo para seleccionar dónde se guardará el
+        fichero.
+
+        Argumentos:
+            parent: QWidget padre.
+
+        Devuelve:
+            String con la ruta del fichero seleccionado.
+        """
+        return QtGui.QFileDialog.getSaveFileName(parent, 'Guardar Como...')
 
 
 if __name__ == "__main__":
