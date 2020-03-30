@@ -43,7 +43,6 @@ class TextEditorWidget(QtGui.QWidget):
         openedFileLabel: QLineEdit que muestra la ruta del fichero abierto.
         fileList: QListWidget que muestra la lista de ficheros de la carpeta.
         textEdit: QTextEdit para mostrar/editar el fichero.
-        arrowButton: QPushButton para abrir el fichero seleccionado.
         refreshButton: QPushButton para recargar la lista de ficheros.
     """
 
@@ -51,11 +50,11 @@ class TextEditorWidget(QtGui.QWidget):
         super(TextEditorWidget, self).__init__()
 
         # Anchura de la primera columna del layout (lista de ficheros).
-        self._COLUMN_0_FIXED_WIDTH = 250
+        self._COLUMN_0_FIXED_WIDTH = 300
         # Anchura mínima de la tercera columna del layout (editor de texto).
-        self._COLUMN_2_MIN_WIDTH = 500
+        self._COLUMN_1_MIN_WIDTH = 600
         # Altura mínima de la segunda fila (lista de ficheros y editor de texto).
-        self._ROW_2_MIN_HEIGHT = 300
+        self._ROW_2_MIN_HEIGHT = 350
 
         self._initUI()
 
@@ -77,7 +76,7 @@ class TextEditorWidget(QtGui.QWidget):
         self.openedFileLabel = QtGui.QLineEdit()
         self.openedFileLabel.setReadOnly(True)
         self.openedFileLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.openedFileLabel.setMinimumWidth(self._COLUMN_2_MIN_WIDTH)
+        self.openedFileLabel.setMinimumWidth(self._COLUMN_1_MIN_WIDTH)
         self.openedFileLabel.setStatusTip("Ruta del fichero abierto")
 
         ##### Lista de ficheros #####
@@ -89,18 +88,16 @@ class TextEditorWidget(QtGui.QWidget):
         self.fileList.setHorizontalScrollBarPolicy(
             QtCore.Qt.ScrollBarAlwaysOn)
         self.fileList.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.fileList.setStatusTip("Ficheros de la carpeta abierta")
+        self.fileList.setStatusTip(
+            "Ficheros de la carpeta abierta (seleccione uno para abrirlo)")
 
         ##### Editor de texto #####
         self.textEdit = QtGui.QTextEdit()
-        self.textEdit.setMinimumWidth(self._COLUMN_2_MIN_WIDTH)
+        self.textEdit.setMinimumWidth(self._COLUMN_1_MIN_WIDTH)
         self.textEdit.setMinimumHeight(self._ROW_2_MIN_HEIGHT)
         self.textEdit.setStatusTip("Fichero abierto")
 
         ##### Botones #####
-        self.arrowButton = QtGui.QPushButton(">>>", self)
-        self.arrowButton.setStatusTip("Abrir el fichero seleccionado")
-
         self.refreshButton = QtGui.QPushButton("Refrescar", self)
         self.refreshButton.setStatusTip(
             "Actualizar la lista de ficheros para reflejar los ultimos cambios "
@@ -110,10 +107,9 @@ class TextEditorWidget(QtGui.QWidget):
         grid = QtGui.QGridLayout()
         grid.setSpacing(10)
         grid.addWidget(self.openedFolderLabel, 0, 0)
-        grid.addWidget(self.openedFileLabel, 0, 2)
+        grid.addWidget(self.openedFileLabel, 0, 1)
         grid.addWidget(self.fileList, 1, 0)
-        grid.addWidget(self.arrowButton, 1, 1)
-        grid.addWidget(self.textEdit, 1, 2, 2, 1)
+        grid.addWidget(self.textEdit, 1, 1, 2, 1)
         grid.addWidget(self.refreshButton, 2, 0)
 
         self.setLayout(grid)

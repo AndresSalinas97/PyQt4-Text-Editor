@@ -54,7 +54,6 @@ class TextEditorController():
 
         Conecta los botones y acciones de la vista con métodos del controlador.
         """
-        self.view.widget.arrowButton.clicked.connect(self._openSelectedFile)
         self.view.widget.refreshButton.clicked.connect(self.reloadFolder)
 
         self.view.widget.fileList.itemClicked.connect(self._openSelectedFile)
