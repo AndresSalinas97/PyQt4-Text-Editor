@@ -117,7 +117,7 @@ class TextEditorWidget(QtGui.QWidget):
 
 class TextEditorMainWindow(QtGui.QMainWindow):
     """
-    Ventana principal del programa.
+    Clase TextEditorMainWindow: Ventana principal del programa.
 
     Contiene la barra de menús, la barra de herramientas, la barra de estado, y,
     por supuesto, el widget con el editor de texto.

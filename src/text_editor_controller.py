@@ -147,7 +147,7 @@ class TextEditorController():
 
             if (not confirmed):  # Si el usuario decide cancelar...
                 # ... eliminamos la selección y...
-                # self._clearFileListSelection()
+                self._clearFileListSelection()
                 return  # ... salimos sin abrir el nuevo fichero.
 
         self.model.openFile(filePath)
@@ -192,7 +192,7 @@ class TextEditorController():
     def _saveFile(self, filePath):
         """
         Actualiza el modelo con los cambios en el editor de la vista, le indica
-        donde guardar los cambios (filePath) y actualiza la vista.
+        dónde guardar los cambios (filePath) y actualiza la vista.
         """
         self.model.openedFileData = self.view.widget.textEdit.toPlainText()
         self.model.saveFile(filePath)
