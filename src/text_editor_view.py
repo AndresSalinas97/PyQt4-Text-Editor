@@ -39,7 +39,11 @@ class TextEditorWidget(QtGui.QWidget):
     Clase TextEditorWidget: QWidget con la interfaz del editor de texto.
 
     Atributos:
-        TODO: Documentar todos los atributos.
+        openedFolderLabel: QLineEdit que muestra la ruta de la carpeta abierta.
+        openedFileLabel: QLineEdit que muestra la ruta del fichero abierto.
+        fileList: QListWidget que muestra la lista de ficheros de la carpeta.
+        textEdit: QTextEdit para mostrar/editar el fichero.
+        arrowButton: QPushButton para abrir el fichero seleccionado.
     """
 
     def __init__(self):
@@ -126,11 +130,11 @@ class TextEditorMainWindow(QtGui.QMainWindow):
     Atributos:
         textEditorWidget: Widget con el editor de texto (objeto de la clase
             textEditorWidget)
-        exitAction: Acción para salir del programa.
-        openFileAction: Acción para abrir fichero.
-        openFolderAction: Acción para abrir carpeta.
-        saveFileAction: Acción para guardar fichero.
-        saveAsAction: Acción para guardar fichero como.
+        exitAction: QAction para salir del programa.
+        openFileAction: QAction para abrir fichero.
+        openFolderAction: QAction para abrir carpeta.
+        saveFileAction: QAction para guardar fichero.
+        saveAsAction: QAction para guardar fichero como.
     """
 
     def __init__(self, textEditorWidget):
