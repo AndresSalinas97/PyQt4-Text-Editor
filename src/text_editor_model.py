@@ -8,30 +8,29 @@ Autor: Andrés Salinas Lima <i52salia@uco.es>.
 """
 
 from __future__ import print_function
+from text_editor_view import TextEditorDialogs
 import sys
 import os
-from PyQt4 import QtGui
 
 
 class TextEditorModel():
     """
-    Clase TextEditorModel: 
+    Clase TextEditorModel: Modelo del editor de texto.
 
     Atributos:
-        openedFilePath
-        openedFileData
-        openedFolderPath
-        openedFolderFiles
+        openedFilePath: String con la ruta al fichero abierto.
+        openedFileData: String con el contenido del fichero abierto.
+        openedFolderPath: String con la ruta a la carpeta abierta.
+        openedFolderFiles: Lista con los ficheros de la carpeta abierta.
     """
 
     def __init__(self):
-        # TODO: Valorar si esto es necesario.
         self.openedFilePath = ""
         self.openedFileData = ""
         self.openedFolderPath = ""
         self.openedFolderFiles = []
 
-    def openThisFolder(self, folderPath):
+    def openFolder(self, folderPath):
         """
         Abre la carpeta indicada en el argumento folderPath para cargar todos
         sus ficheros en la lista de ficheros self.openedFolderFiles.
@@ -50,63 +49,50 @@ class TextEditorModel():
             else:
                 self.openedFolderPath = folderPath
         except:
-            self._showErrorMessage("No se pudo abrir la carpeta \"" +
-                                   folderPath + "\"")
+            TextEditorDialogs.showErrorMessage("No se pudo abrir la carpeta \"" +
+                                               folderPath + "\"")
 
-    def openThisFile(self, filePath):
+    def openFile(self, filePath):
         """
         Abre el fichero indicado en el argumento filePath.
         """
         try:
-            file = open(filePath, 'r')
-            with file:
+            with open(filePath, 'r') as file:
                 self.openedFileData = file.read()
                 self.openedFilePath = filePath
 
                 file.close()
         except:
-            self._showErrorMessage("No se pudo abrir el fichero \"" +
-                                   filePath + "\"")
+            TextEditorDialogs.showErrorMessage("No se pudo abrir el fichero \"" +
+                                               filePath + "\"")
 
-    def saveInThisFile(self, filePath):
+    def saveFile(self, filePath):
         """
         Guarda el archivo abierto en la ruta indicada en el argumento filePath.
         """
         try:
-            file = open(filePath, "w")
+            with open(filePath, "w") as file:
+                file.write(self.openedFileData)
 
-            file.write(self.openedFileData)
-
-            file.close()
+                file.close()
 
             self.openedFilePath = filePath
 
-            self._showInfoMessage("Fichero guardado con exito!")
+            # Actualizamos los ficheros de la carpeta para que el nuevo fichero
+            # aparezca en el menú lateral.
+            self.reloadFolder()
+
+            TextEditorDialogs.showInfoMessage("Fichero guardado con exito!")
         except:
-            self._showErrorMessage("No se pudo guardar en el fichero \"" +
-                                   filePath + "\"")
+            TextEditorDialogs.showErrorMessage("No se pudo guardar en el fichero \"" +
+                                               filePath + "\"")
 
-    def _showErrorMessage(self, errorText):
+    def reloadFolder(self):
         """
-        Muestra una ventana emergente de error con el mensaje indicado en
-        el argumento errorText.
+        Vuelve a cargar los ficheros de la carpeta abierta (para actualizar
+        la lista y mostrar nuevos ficheros que puedan haber sido creados).
         """
-        msg = QtGui.QMessageBox()
-        msg.setWindowTitle("Error")
-        msg.setIcon(QtGui.QMessageBox.Critical)
-        msg.setText(errorText)
-        msg.exec_()
-
-    def _showInfoMessage(self, infoText):
-        """
-        Muestra una ventana emergente de información con el mensaje indicado en
-        el argumento infoText.
-        """
-        msg = QtGui.QMessageBox()
-        msg.setWindowTitle("Informacion")
-        msg.setIcon(QtGui.QMessageBox.Information)
-        msg.setText(infoText)
-        msg.exec_()
+        self.openFolder(self.openedFolderPath)
 
     def _listNotHiddenFiles(self, folderPath):
         """
