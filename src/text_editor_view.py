@@ -231,6 +231,27 @@ class TextEditorDialogs():
         msg.exec_()
 
     @staticmethod
+    def confirmOperationMessage(infoText):
+        """
+        Muestra una ventana emergente de advertencia para confirmar que el
+        usuario desea continuar con la operación.
+
+        Devuelve:
+            True si el usuario hace click en Ok; False en caso contrario.
+        """
+        msg = QtGui.QMessageBox()
+        msg.setWindowTitle("Advertencia")
+        msg.setIcon(QtGui.QMessageBox.Warning)
+        msg.setText(infoText)
+        msg.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
+        retval = msg.exec_()
+
+        if (retval == QtGui.QMessageBox.Ok):
+            return True
+        else:
+            return False
+
+    @staticmethod
     def openFileDialog(parent):
         """
         Muestra una ventana de diálogo para seleccionar el fichero a abrir.

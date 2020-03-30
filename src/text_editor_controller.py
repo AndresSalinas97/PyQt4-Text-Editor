@@ -134,9 +134,35 @@ class TextEditorController():
     def _openFile(self, filePath):
         """
         Indica al modelo el fichero a abrir (filePath) y actualiza la vista.
+
+        Antes de abrir el nuevo fichero se comprobará si el usuario ha hecho
+        cambios en el fichero abierto y, en caso afirmativo, se le avisará de
+        que perderá dichos cambios y se le permitirá cancelar la operación.
         """
+        # Comprobamos si el usuario ha hecho cambios en el fichero abierto.
+        if (self.view.widget.textEdit.toPlainText() != self.model.openedFileData):
+            # Avisamos al usuario y le pedimos confirmación.
+            confirmed = TextEditorDialogs.confirmOperationMessage(
+                "Al abrir otro fichero perdera los cambios sin guardar!")
+
+            if (not confirmed):  # Si el usuario decide cancelar...
+                # ... eliminamos la selección y...
+                # self._clearFileListSelection()
+                return  # ... salimos sin abrir el nuevo fichero.
+
         self.model.openFile(filePath)
         self._updateView()
+
+    def _clearFileListSelection(self):
+        """
+        Anula la selección de todos los items de la lista de ficheros.
+
+        Sirve para que el fichero que se ha intentado abrir no se quede marcado
+        como seleccionado en el panel lateral si este finalmente no ha sido
+        abierto.
+        """
+        for item in self.view.widget.fileList.selectedItems():
+            self.view.widget.fileList.setItemSelected(item, False)
 
     def _saveAsDialog(self):
         """
