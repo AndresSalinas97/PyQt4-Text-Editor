@@ -55,6 +55,7 @@ class TextEditorController():
         Conecta los botones y acciones de la vista con métodos del controlador.
         """
         self.view.widget.arrowButton.clicked.connect(self._openSelectedFile)
+        self.view.widget.refreshButton.clicked.connect(self.reloadFolder)
 
         self.view.mainWindow.exitAction.triggered.connect(
             QtGui.qApp.closeAllWindows)
@@ -168,6 +169,13 @@ class TextEditorController():
         """
         self.model.openedFileData = self.view.widget.textEdit.toPlainText()
         self.model.saveFile(filePath)
+        self._updateView()
+
+    def reloadFolder(self):
+        """
+        Ordena al modelo actualizar la lista de ficheros y actualiza la vista.
+        """
+        self.model.reloadFolder()
         self._updateView()
 
 

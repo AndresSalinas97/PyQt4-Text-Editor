@@ -44,6 +44,7 @@ class TextEditorWidget(QtGui.QWidget):
         fileList: QListWidget que muestra la lista de ficheros de la carpeta.
         textEdit: QTextEdit para mostrar/editar el fichero.
         arrowButton: QPushButton para abrir el fichero seleccionado.
+        refreshButton: QPushButton para recargar la lista de ficheros.
     """
 
     def __init__(self):
@@ -96,9 +97,14 @@ class TextEditorWidget(QtGui.QWidget):
         self.textEdit.setMinimumHeight(self._ROW_2_MIN_HEIGHT)
         self.textEdit.setStatusTip("Fichero abierto")
 
-        ##### Botón #####
+        ##### Botones #####
         self.arrowButton = QtGui.QPushButton(">>>", self)
         self.arrowButton.setStatusTip("Abrir el fichero seleccionado")
+
+        self.refreshButton = QtGui.QPushButton("Refrescar", self)
+        self.refreshButton.setStatusTip(
+            "Actualizar la lista de ficheros para reflejar los ultimos cambios "
+            "en la carpeta abierta")
 
         ##### Configuración grid layout #####
         grid = QtGui.QGridLayout()
@@ -107,7 +113,8 @@ class TextEditorWidget(QtGui.QWidget):
         grid.addWidget(self.openedFileLabel, 0, 2)
         grid.addWidget(self.fileList, 1, 0)
         grid.addWidget(self.arrowButton, 1, 1)
-        grid.addWidget(self.textEdit, 1, 2)
+        grid.addWidget(self.textEdit, 1, 2, 2, 1)
+        grid.addWidget(self.refreshButton, 2, 0)
 
         self.setLayout(grid)
 
