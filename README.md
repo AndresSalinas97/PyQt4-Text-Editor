@@ -1,4 +1,4 @@
-# PyQt4 MVC Text Editor
+# WTF Github
 
 **Práctica 2 de la asignatura ISSBC.**
 
