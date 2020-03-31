@@ -17,6 +17,9 @@ class TextEditorView():
     """
     Clase TextEditorView: Vista del editor de texto.
 
+    Monta la interfaz del editor a partir de las clases TextEditorWidget y
+    TextEditorMainWindow y permite acceder a ellas a partir de sus atributos.
+
     Atributos:
         widget: QWidget con la interfaz del editor de texto (objeto de la clase
             TextEditorWidget).

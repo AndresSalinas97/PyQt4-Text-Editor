@@ -145,10 +145,12 @@ class TextEditorController():
             confirmed = TextEditorDialogs.confirmOperationMessage(
                 "Al abrir otro fichero perdera los cambios sin guardar!")
 
-            if (not confirmed):  # Si el usuario decide cancelar...
+            # Si el usuario decide cancelar...
+            if (not confirmed):
                 # ... eliminamos la selección y...
                 self._clearFileListSelection()
-                return  # ... salimos sin abrir el nuevo fichero.
+                # ... salimos sin abrir el nuevo fichero.
+                return
 
         self.model.openFile(filePath)
         self._updateView()
