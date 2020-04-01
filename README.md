@@ -10,5 +10,8 @@ El programa mostrará un mensaje emergente cada vez que un fichero se guarda en 
 
 ![Imagen de la ventana principal del editor](docs/images/mainWindow.png)
 
+
+
 ## Autor
+
 * Andrés Salinas Lima ([i52salia@uco.es](mailto:i52salia@uco.es))
