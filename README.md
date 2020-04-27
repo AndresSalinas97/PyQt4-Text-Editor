@@ -1,6 +1,6 @@
 # PyQt4 MVC Text Editor
 
-**Práctica 2 de la asignatura ISSBC.**
+**Práctica 2 de la asignatura Ingeniería Sistemas Software Basados en Conocimiento.**
 
 Programa editor de ficheros de texto desarrollado con PyQt4 siguiendo la arquitectura Modelo-Vista-Controlador.
 
