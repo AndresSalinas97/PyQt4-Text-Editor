@@ -14,4 +14,4 @@ El programa mostrará un mensaje emergente cada vez que un fichero se guarda en 
 
 ## Autor
 
-* Andrés Salinas Lima ([i52salia@uco.es](mailto:i52salia@uco.es))
+* Andrés Salinas Lima
