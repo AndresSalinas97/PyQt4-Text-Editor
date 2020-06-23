@@ -83,7 +83,7 @@ class TextEditorController():
         self.view.widget.fileList.sortItems()  # Ordena alfabéticamente.
 
         # Actualizamos el editor
-        self.view.widget.textEdit.setText(self.model.openedFileData)
+        self.view.widget.textEdit.setText(unicode(self.model.openedFileData))
 
     def _openFolderDialog(self):
         """
@@ -124,10 +124,11 @@ class TextEditorController():
 
         if (not selectedFiles):
             TextEditorDialogs.showErrorMessage(
-                "Primero debe seleccionar un fichero en el panel de la izquierda!")
+                u"Primero debe seleccionar un fichero en el panel de la izquierda!")
             return
 
-        filePath = self.model.openedFolderPath + selectedFiles[0].text()
+        filePath = unicode(self.model.openedFolderPath +
+                           selectedFiles[0].text())
 
         self._openFile(filePath)
 
@@ -143,7 +144,7 @@ class TextEditorController():
         if (self.view.widget.textEdit.toPlainText() != self.model.openedFileData):
             # Avisamos al usuario y le pedimos confirmación.
             confirmed = TextEditorDialogs.confirmOperationMessage(
-                "Al abrir otro fichero perdera los cambios sin guardar!")
+                u"Al abrir otro fichero perderá los cambios sin guardar!")
 
             # Si el usuario decide cancelar...
             if (not confirmed):
@@ -196,7 +197,8 @@ class TextEditorController():
         Actualiza el modelo con los cambios en el editor de la vista, le indica
         dónde guardar los cambios (filePath) y actualiza la vista.
         """
-        self.model.openedFileData = self.view.widget.textEdit.toPlainText()
+        self.model.openedFileData = unicode(
+            self.view.widget.textEdit.toPlainText())
         self.model.saveFile(filePath)
         self._updateView()
 
@@ -212,4 +214,4 @@ if __name__ == "__main__":
     """
     En caso de que intentemos ejecutar este módulo.
     """
-    print("Este módulo no puede ser ejecutado", file=sys.stderr)
+    print(u"Este módulo no puede ser ejecutado", file=sys.stderr)

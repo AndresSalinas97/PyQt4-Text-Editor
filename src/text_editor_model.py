@@ -9,6 +9,7 @@ Autor: Andrés Salinas Lima <i52salia@uco.es>.
 
 from __future__ import print_function
 from text_editor_view import TextEditorDialogs
+import codecs
 import sys
 import os
 
@@ -25,9 +26,9 @@ class TextEditorModel():
     """
 
     def __init__(self):
-        self.openedFilePath = ""
-        self.openedFileData = ""
-        self.openedFolderPath = ""
+        self.openedFilePath = u""
+        self.openedFileData = u""
+        self.openedFolderPath = u""
         self.openedFolderFiles = []
 
     def openFolder(self, folderPath):
@@ -36,7 +37,7 @@ class TextEditorModel():
         sus ficheros en la lista de ficheros self.openedFolderFiles.
         """
         try:
-            folderPath = str(folderPath)
+            folderPath = unicode(folderPath)
             folderPath = os.path.abspath(folderPath)
 
             # Obtenemos la lista con los ficheros de la carpeta.
@@ -50,29 +51,29 @@ class TextEditorModel():
                 self.openedFolderPath = folderPath
         except:
             TextEditorDialogs.showErrorMessage(
-                "No se pudo abrir la carpeta \"" + folderPath + "\"")
+                u"No se pudo abrir la carpeta \"" + folderPath + u"\"")
 
     def openFile(self, filePath):
         """
         Abre el fichero indicado en el argumento filePath.
         """
         try:
-            with open(filePath, 'r') as file:
-                self.openedFileData = file.read()
+            with codecs.open(filePath, 'r', encoding='utf-8') as file:
+                self.openedFileData = unicode(file.read())
                 self.openedFilePath = filePath
 
                 file.close()
         except:
             TextEditorDialogs.showErrorMessage(
-                "No se pudo abrir el fichero \"" + filePath + "\"")
+                u"No se pudo abrir el fichero \"" + filePath + u"\"")
 
     def saveFile(self, filePath):
         """
         Guarda el archivo abierto en la ruta indicada en el argumento filePath.
         """
         try:
-            with open(filePath, "w") as file:
-                file.write(self.openedFileData)
+            with codecs.open(filePath, 'w', encoding='utf-8') as file:
+                file.write(unicode(self.openedFileData))
 
                 file.close()
 
@@ -82,10 +83,10 @@ class TextEditorModel():
             # aparezca en el menú lateral.
             self.reloadFolder()
 
-            TextEditorDialogs.showInfoMessage("Fichero guardado con exito!")
+            TextEditorDialogs.showInfoMessage(u"Fichero guardado con éxito!")
         except:
             TextEditorDialogs.showErrorMessage(
-                "No se pudo guardar en el fichero \"" + filePath + "\"")
+                u"No se pudo guardar en el fichero \"" + filePath + u"\"")
 
     def reloadFolder(self):
         """
@@ -113,4 +114,4 @@ if __name__ == "__main__":
     """
     En caso de que intentemos ejecutar este módulo.
     """
-    print("Este módulo no puede ser ejecutado", file=sys.stderr)
+    print(u"Este módulo no puede ser ejecutado", file=sys.stderr)

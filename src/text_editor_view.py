@@ -74,13 +74,13 @@ class TextEditorWidget(QtGui.QWidget):
         self.openedFolderLabel.setReadOnly(True)
         self.openedFolderLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.openedFolderLabel.setFixedWidth(self._COLUMN_0_FIXED_WIDTH)
-        self.openedFolderLabel.setStatusTip("Ruta de la carpeta abierta")
+        self.openedFolderLabel.setStatusTip(u"Ruta de la carpeta abierta")
 
         self.openedFileLabel = QtGui.QLineEdit()
         self.openedFileLabel.setReadOnly(True)
         self.openedFileLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.openedFileLabel.setMinimumWidth(self._COLUMN_1_MIN_WIDTH)
-        self.openedFileLabel.setStatusTip("Ruta del fichero abierto")
+        self.openedFileLabel.setStatusTip(u"Ruta del fichero abierto")
 
         ##### Lista de ficheros #####
         self.fileList = QtGui.QListWidget()
@@ -92,19 +92,19 @@ class TextEditorWidget(QtGui.QWidget):
             QtCore.Qt.ScrollBarAlwaysOn)
         self.fileList.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.fileList.setStatusTip(
-            "Ficheros de la carpeta abierta (seleccione uno para abrirlo)")
+            u"Ficheros de la carpeta abierta (seleccione uno para abrirlo)")
 
         ##### Editor de texto #####
         self.textEdit = QtGui.QTextEdit()
         self.textEdit.setMinimumWidth(self._COLUMN_1_MIN_WIDTH)
         self.textEdit.setMinimumHeight(self._ROW_2_MIN_HEIGHT)
-        self.textEdit.setStatusTip("Fichero abierto")
+        self.textEdit.setStatusTip(u"Fichero abierto")
 
         ##### Botones #####
-        self.refreshButton = QtGui.QPushButton("Refrescar", self)
+        self.refreshButton = QtGui.QPushButton(u"Refrescar", self)
         self.refreshButton.setStatusTip(
-            "Actualizar la lista de ficheros para reflejar los ultimos cambios "
-            "en la carpeta abierta")
+            u"Actualizar la lista de ficheros para reflejar los últimos cambios"
+            u" en la carpeta abierta")
 
         ##### Configuración grid layout #####
         grid = QtGui.QGridLayout()
@@ -152,30 +152,31 @@ class TextEditorMainWindow(QtGui.QMainWindow):
         """
 
         ##### Acciones #####
-        self.exitAction = QtGui.QAction("Salir", self)
+        self.exitAction = QtGui.QAction(u"Salir", self)
         self.exitAction.setShortcut('Ctrl+Q')
-        self.exitAction.setStatusTip("Salir del programa")
+        self.exitAction.setStatusTip(u"Salir del programa")
 
-        self.openFileAction = QtGui.QAction("Abrir Fichero", self)
+        self.openFileAction = QtGui.QAction(u"Abrir Fichero", self)
         self.openFileAction.setShortcut('Ctrl+O')
-        self.openFileAction.setStatusTip("Abrir fichero")
+        self.openFileAction.setStatusTip(u"Abrir fichero")
 
-        self.openFolderAction = QtGui.QAction("Abrir Carpeta", self)
+        self.openFolderAction = QtGui.QAction(u"Abrir Carpeta", self)
         self.openFolderAction.setShortcut('Ctrl+Shift+O')
-        self.openFolderAction.setStatusTip("Abrir carpeta")
+        self.openFolderAction.setStatusTip(u"Abrir carpeta")
 
-        self.saveFileAction = QtGui.QAction("Guardar", self)
+        self.saveFileAction = QtGui.QAction(u"Guardar", self)
         self.saveFileAction.setShortcut('Ctrl+S')
-        self.saveFileAction.setStatusTip("Guardar cambios del fichero abierto")
+        self.saveFileAction.setStatusTip(
+            u"Guardar cambios del fichero abierto")
 
-        self.saveAsAction = QtGui.QAction("Guardar Como...", self)
+        self.saveAsAction = QtGui.QAction(u"Guardar Como...", self)
         self.saveAsAction.setShortcut('Ctrl+Shift+S')
         self.saveAsAction.setStatusTip(
-            "Guardar cambios del fichero abierto en un nuevo fichero")
+            u"Guardar cambios del fichero abierto en un nuevo fichero")
 
         ##### Barra de menús #####
         menuBar = self.menuBar()
-        fileMenu = menuBar.addMenu('&Archivo')
+        fileMenu = menuBar.addMenu(u"Archivo")
         fileMenu.addAction(self.openFileAction)
         fileMenu.addAction(self.openFolderAction)
         fileMenu.addSeparator()
@@ -185,7 +186,7 @@ class TextEditorMainWindow(QtGui.QMainWindow):
         fileMenu.addAction(self.exitAction)
 
         ##### Barra de herramientas #####
-        toolBar = self.addToolBar("Barra de Herramientas")
+        toolBar = self.addToolBar(u"Barra de Herramientas")
         toolBar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
         toolBar.addAction(self.openFileAction)
         toolBar.addAction(self.openFolderAction)
@@ -200,7 +201,7 @@ class TextEditorMainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.textEditorWidget)
 
         ##### Propiedades ventana #####
-        self.setWindowTitle("Editor de Texto")
+        self.setWindowTitle(u"Editor de Texto")
 
 
 class TextEditorDialogs():
@@ -216,7 +217,7 @@ class TextEditorDialogs():
         el argumento errorText.
         """
         msg = QtGui.QMessageBox()
-        msg.setWindowTitle("Error")
+        msg.setWindowTitle(u"Error")
         msg.setIcon(QtGui.QMessageBox.Critical)
         msg.setText(errorText)
         msg.exec_()
@@ -228,7 +229,7 @@ class TextEditorDialogs():
         el argumento infoText.
         """
         msg = QtGui.QMessageBox()
-        msg.setWindowTitle("Informacion")
+        msg.setWindowTitle(u"Información")
         msg.setIcon(QtGui.QMessageBox.Information)
         msg.setText(infoText)
         msg.exec_()
@@ -243,7 +244,7 @@ class TextEditorDialogs():
             True si el usuario hace click en Ok; False en caso contrario.
         """
         msg = QtGui.QMessageBox()
-        msg.setWindowTitle("Advertencia")
+        msg.setWindowTitle(u"Advertencia")
         msg.setIcon(QtGui.QMessageBox.Warning)
         msg.setText(infoText)
         msg.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
@@ -265,7 +266,7 @@ class TextEditorDialogs():
         Devuelve:
             String con la ruta del fichero seleccionado.
         """
-        return QtGui.QFileDialog.getOpenFileName(parent, "Abrir fichero")
+        return unicode(QtGui.QFileDialog.getOpenFileName(parent, u"Abrir fichero"))
 
     @staticmethod
     def openFolderDialog(parent):
@@ -278,8 +279,8 @@ class TextEditorDialogs():
         Devuelve:
             String con la ruta de la carpeta seleccionada.
         """
-        return QtGui.QFileDialog.getExistingDirectory(
-            parent, "Seleccionar carpeta")
+        return unicode(QtGui.QFileDialog.getExistingDirectory(
+            parent, u"Seleccionar carpeta"))
 
     @staticmethod
     def saveFileDialog(parent):
@@ -293,11 +294,11 @@ class TextEditorDialogs():
         Devuelve:
             String con la ruta del fichero seleccionado.
         """
-        return QtGui.QFileDialog.getSaveFileName(parent, 'Guardar Como...')
+        return unicode(QtGui.QFileDialog.getSaveFileName(parent, u"Guardar Como..."))
 
 
 if __name__ == "__main__":
     """
     En caso de que intentemos ejecutar este módulo.
     """
-    print("Este módulo no puede ser ejecutado", file=sys.stderr)
+    print(u"Este módulo no puede ser ejecutado", file=sys.stderr)
