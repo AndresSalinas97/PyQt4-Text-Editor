@@ -30,133 +30,140 @@ class TextEditorController():
         self.model = model
         self.view = view
 
-        self._initModel()
-        self._initView()
-        self._initController()
+        self._init_model()
+        self._init_view()
+        self._init_controller()
 
-    def _initModel(self):
+    def _init_model(self):
         """
         Inicializa el modelo.
         """
         # El editor se abrirá con el directorio actual (.) cargado.
-        self.model.openFolder(".")
+        self.model.open_folder(".")
 
-    def _initView(self):
+    def _init_view(self):
         """
         Inicializa la vista.
         """
-        self._updateView()
+        self._update_view()
         self.view.show()
 
-    def _initController(self):
+    def _init_controller(self):
         """
         Inicializa el controlador.
 
         Conecta los botones y acciones de la vista con métodos del controlador.
         """
-        self.view.widget.refreshButton.clicked.connect(self.reloadFolder)
+        self.view.main_widget.refresh_button.clicked.connect(
+            self._reload_folder)
 
-        self.view.widget.fileList.itemClicked.connect(self._openSelectedFile)
+        self.view.main_widget.file_list.itemClicked.connect(
+            self._open_selected_file)
 
-        self.view.mainWindow.exitAction.triggered.connect(
+        self.view.main_window.exit_action.triggered.connect(
             QtGui.qApp.closeAllWindows)
-        self.view.mainWindow.openFileAction.triggered.connect(
-            self._openFileDialog)
-        self.view.mainWindow.openFolderAction.triggered.connect(
-            self._openFolderDialog)
-        self.view.mainWindow.saveFileAction.triggered.connect(
-            self._saveOpenedFile)
-        self.view.mainWindow.saveAsAction.triggered.connect(
-            self._saveAsDialog)
+        self.view.main_window.open_file_action.triggered.connect(
+            self._open_file_dialog)
+        self.view.main_window.open_folder_action.triggered.connect(
+            self._open_folder_dialog)
+        self.view.main_window.save_file_action.triggered.connect(
+            self._save_opened_file)
+        self.view.main_window.save_as_action.triggered.connect(
+            self._save_as_dialog)
 
-    def _updateView(self):
+    def _update_view(self):
         """
         Actualiza la vista.
         """
         # Actualizamos las etiquetas.
-        self.view.widget.openedFileLabel.setText(self.model.openedFilePath)
-        self.view.widget.openedFolderLabel.setText(self.model.openedFolderPath)
+        self.view.main_widget.opened_file_label.setText(
+            self.model.opened_file_path)
+        self.view.main_widget.opened_folder_label.setText(
+            self.model.opened_folder_path)
 
         # Actualizamos la lista de ficheros.
-        self.view.widget.fileList.clear()
-        self.view.widget.fileList.addItems(self.model.openedFolderFiles)
-        self.view.widget.fileList.sortItems()  # Ordena alfabéticamente.
+        self.view.main_widget.file_list.clear()
+        self.view.main_widget.file_list.addItems(
+            self.model.opened_folder_files)
+        self.view.main_widget.file_list.sortItems()  # Ordena alfabéticamente.
 
         # Actualizamos el editor
-        self.view.widget.textEdit.setText(unicode(self.model.openedFileData))
+        self.view.main_widget.text_edit.setText(
+            unicode(self.model.opened_file_data))
 
-    def _openFolderDialog(self):
+    def _open_folder_dialog(self):
         """
         Muestra una ventana de diálogo para elegir la carpeta que se abrirá.
         """
         # Ventana de diálogo para seleccionar la carpeta.
-        folderPath = TextEditorDialogs.openFolderDialog(self.view.mainWindow)
+        folder_path = TextEditorDialogs.open_folder_dialog(
+            self.view.main_window)
 
         # Antes de continuar comprobamos que el usuario realmente ha
         # seleccionado una carpeta.
-        if(folderPath):
-            self._openFolder(folderPath)
+        if(folder_path):
+            self._open_folder(folder_path)
 
-    def _openFolder(self, folderPath):
+    def _open_folder(self, folder_path):
         """
-        Indica al modelo la carpeta a abrir (folderPath) y actualiza la vista.
+        Indica al modelo la carpeta a abrir (folder_path) y actualiza la vista.
         """
-        self.model.openFolder(folderPath)
-        self._updateView()
+        self.model.open_folder(folder_path)
+        self._update_view()
 
-    def _openFileDialog(self):
+    def _open_file_dialog(self):
         """
         Muestra una ventana de diálogo para elegir fichero que se abrirá.
         """
         # Ventana de diálogo para seleccionar el fichero.
-        filePath = TextEditorDialogs.openFileDialog(self.view.mainWindow)
+        file_path = TextEditorDialogs.open_file_dialog(self.view.main_window)
 
         # Antes de continuar comprobamos que el usuario realmente ha
         # seleccionado un fichero.
-        if(filePath):
-            self._openFile(filePath)
+        if(file_path):
+            self._open_file(file_path)
 
-    def _openSelectedFile(self):
+    def _open_selected_file(self):
         """
         Abre el fichero seleccionado en la lista de ficheros.
         """
-        selectedFiles = self.view.widget.fileList.selectedItems()
+        selected_files = self.view.main_widget.file_list.selectedItems()
 
-        if (not selectedFiles):
-            TextEditorDialogs.showErrorMessage(
+        if (not selected_files):
+            TextEditorDialogs.show_error_message(
                 u"Primero debe seleccionar un fichero en el panel de la izquierda!")
             return
 
-        filePath = unicode(self.model.openedFolderPath +
-                           selectedFiles[0].text())
+        file_path = unicode(self.model.opened_folder_path +
+                            selected_files[0].text())
 
-        self._openFile(filePath)
+        self._open_file(file_path)
 
-    def _openFile(self, filePath):
+    def _open_file(self, file_path):
         """
-        Indica al modelo el fichero a abrir (filePath) y actualiza la vista.
+        Indica al modelo el fichero a abrir (file_path) y actualiza la vista.
 
         Antes de abrir el nuevo fichero se comprobará si el usuario ha hecho
         cambios en el fichero abierto y, en caso afirmativo, se le avisará de
         que perderá dichos cambios y se le permitirá cancelar la operación.
         """
         # Comprobamos si el usuario ha hecho cambios en el fichero abierto.
-        if (self.view.widget.textEdit.toPlainText() != self.model.openedFileData):
+        if (self.view.main_widget.text_edit.toPlainText() != self.model.opened_file_data):
             # Avisamos al usuario y le pedimos confirmación.
-            confirmed = TextEditorDialogs.confirmOperationMessage(
+            confirmed = TextEditorDialogs.confirm_operation_message(
                 u"Al abrir otro fichero perderá los cambios sin guardar!")
 
             # Si el usuario decide cancelar...
             if (not confirmed):
                 # ... eliminamos la selección y...
-                self._clearFileListSelection()
+                self._clear_file_list_selection()
                 # ... salimos sin abrir el nuevo fichero.
                 return
 
-        self.model.openFile(filePath)
-        self._updateView()
+        self.model.open_file(file_path)
+        self._update_view()
 
-    def _clearFileListSelection(self):
+    def _clear_file_list_selection(self):
         """
         Anula la selección de todos los items de la lista de ficheros.
 
@@ -164,50 +171,50 @@ class TextEditorController():
         como seleccionado en el panel lateral si este finalmente no ha sido
         abierto.
         """
-        for item in self.view.widget.fileList.selectedItems():
-            self.view.widget.fileList.setItemSelected(item, False)
+        for item in self.view.main_widget.file_list.selectedItems():
+            self.view.main_widget.file_list.setItemSelected(item, False)
 
-    def _saveAsDialog(self):
+    def _save_as_dialog(self):
         """
         Muestra una ventana de diálogo para elegir dónde se guardará el fichero.
         """
         # Ventana de diálogo para seleccionar dónde se guardará el fichero.
-        filePath = TextEditorDialogs.saveFileDialog(self.view.mainWindow)
+        file_path = TextEditorDialogs.save_file_dialog(self.view.main_window)
 
         # Antes de continuar comprobamos que el usuario realmente ha
         # seleccionado un fichero.
-        if(filePath):
-            self._saveFile(filePath)
+        if(file_path):
+            self._save_file(file_path)
 
-    def _saveOpenedFile(self):
+    def _save_opened_file(self):
         """
         Guarda el archivo abierto.
 
         Si no hay ningún archivo abierto, es decir, la etiqueta que indica el
-        fichero abierto openedFilePath está vacía, se abrirá la ventana de
+        fichero abierto opened_file_path está vacía, se abrirá la ventana de
         diálogo de Guardar Como...
         """
-        if (not self.model.openedFilePath):
-            self._saveAsDialog()
+        if (not self.model.opened_file_path):
+            self._save_as_dialog()
         else:
-            self._saveFile(self.model.openedFilePath)
+            self._save_file(self.model.opened_file_path)
 
-    def _saveFile(self, filePath):
+    def _save_file(self, file_path):
         """
         Actualiza el modelo con los cambios en el editor de la vista, le indica
-        dónde guardar los cambios (filePath) y actualiza la vista.
+        dónde guardar los cambios (file_path) y actualiza la vista.
         """
-        self.model.openedFileData = unicode(
-            self.view.widget.textEdit.toPlainText())
-        self.model.saveFile(filePath)
-        self._updateView()
+        self.model.opened_file_data = unicode(
+            self.view.main_widget.text_edit.toPlainText())
+        self.model.save_file(file_path)
+        self._update_view()
 
-    def reloadFolder(self):
+    def _reload_folder(self):
         """
         Ordena al modelo actualizar la lista de ficheros y actualiza la vista.
         """
-        self.model.reloadFolder()
-        self._updateView()
+        self.model.reload_folder()
+        self._update_view()
 
 
 if __name__ == "__main__":

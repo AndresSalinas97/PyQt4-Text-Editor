@@ -44,4 +44,4 @@ if __name__ == "__main__":
     """
     Función principal: Inicia el programa.
     """
-    textEditorProgram = TextEditor()
+    text_editor_program = TextEditor()
